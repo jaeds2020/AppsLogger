@@ -13,13 +13,6 @@ export default function ({ navigation }) {
 var mqttServer = 'wss://txio.uitm.edu.my:8888/mqtt'
 var mqttTopic = 'TRX/gps/random'
 
-// Set logic for button, input state for connected and disconnected
-const [buttonCondition, setButtonCondition] = useState(false)
-const [edit, setEdit] = useState(true)
-const [select, setSelect] = useState(true)
-const [connectButton, setConnectButton] = useState(false)
-const [disconnectButton, setDisconnectButton] = useState(true)
-
 // Display data
 // const [textData, setTextData] = useState([])
 const [station,setSID]  = useState(null);
@@ -42,7 +35,7 @@ useEffect(() => {
     })
     client.on('message', function(topic,message) {
       try {
-        let data= JSON.parse(message.toString())
+        let data= JSON.stringify(message)
         console.log(data)
         setSID(data.station)
         setLAT(data.LAT)
@@ -57,14 +50,14 @@ useEffect(() => {
   } catch (error) {
      console.log(error)
   }
-}, [buttonCondition]) //re-run function if connect button is clicked
+}, []) //re-run function if connect button is clicked
 
 useEffect(() => {
 
 }, [])
 
 	return (
-		<Layout navigation={navigation} name="Terminal">
+		<Layout navigation={navigation} name="mqttTerminal">
 			<View
 				style={{
 					flex: 1,
