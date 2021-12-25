@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, StyleSheet, Text, View, Dimensions } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { Platform, Text, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 
-// Setup Location tracking permission
-export default function mapView() {
-   const [location, setLocation] = useState(null);
-   const [errorMsg, setErrorMsg] = useState(null);
-   var LON = ''; 
-   var LAT = '';
+export default function App() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -31,6 +27,7 @@ export default function mapView() {
   }, []);
 
   let text = 'Waiting..';
+  let LON = ''; let LAT = '';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -41,28 +38,19 @@ export default function mapView() {
 
   return (
     <View style={styles.container}>
-      <MapView initialRegion={{
-      latitude: Number(LAT),
-      longitude: Number(LON),
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
-    }}
-    style={styles.map} />
+      <Text style={styles.paragraph}>LON: {LON}</Text>
+      <Text style={styles.paragraph}>LAT: {LAT}</Text>
+      <Text style={styles.paragraph}>{text}</Text>
     </View>
-    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    padding: 20,
   },
   paragraph: {
     fontSize: 18,
