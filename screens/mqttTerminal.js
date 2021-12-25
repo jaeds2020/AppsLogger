@@ -35,7 +35,7 @@ useEffect(() => {
     })
     client.on('message', function(topic,message) {
       try {
-        let data= JSON.stringify(message)
+        let data= JSON.parse(message.toString())
         console.log(data)
         setSID(data.station)
         setLAT(data.LAT)
