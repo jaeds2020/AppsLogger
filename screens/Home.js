@@ -19,7 +19,7 @@ export default function ({ navigation }) {
 				<Text>This text using ubuntu font</Text>
 				<TouchableOpacity
 					onPress={() => {
-						navigation.navigate('Terminal');
+						navigation.navigate('About');
 					}}
 					style={{
 						backgroundColor: Colors.primary,
@@ -30,10 +30,12 @@ export default function ({ navigation }) {
 					}}
 				>
 					<Text style={{ color: 'white' }} bold>
-						Go to Terminal screen
+						Go to location permission
 					</Text>
 				</TouchableOpacity>
+				
 			</View>
+			
 		</Layout>
 	);
 }

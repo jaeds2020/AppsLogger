@@ -1,22 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Layout from '../components/global/Layout';
-import Text from '../components/utils/UbuntuFont';
-import Colors from '../constants/colors';
-export default function About() {
-	return (
-		<Layout name="About">
-			<View
-				style={{
-					flex: 1,
-					alignItems: 'center',
-					justifyContent: 'center',
-				}}
-			>
-				{/* This text using ubuntu font */}
-				<Text bold>This is About tab</Text>
-			</View>
-		</Layout>
-	);
-}
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
+
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
+
+const App = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        <Text>Pull down to see RefreshControl indicator</Text>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+export default App;

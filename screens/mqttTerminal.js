@@ -1,92 +1,95 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, View, TextInput, Button, ScrollView  } from 'react-native';
 import Layout from '../components/global/Layout';
 import Text from '../components/utils/UbuntuFont';
-const ReactDOM = require('react-dom');
-const WorldMap = require('react-world-map');
-
-
-// Data communication protocol
 var mqtt = require('@taoqf/react-native-mqtt')
-var server_mqtt = 'wss://txio.uitm.edu.my:8888/mqtt'
-var client  = mqtt.connect(server_mqtt)
-var topic_mqtt = 'txio_speed'
 
-function mqttTerminal() {
-  const [selected, onSelect] = useState(null);
-  ReactDOM.render(
-    <YourMainComponent />,
-    document.getElementById('react-app')
-  )
-    useEffect(()=>{
-        displayData = async ()=>{  
-          try{  
-            client  = mqtt.connect(`${server_mqtt}`)
-            client.on('connect', function(){
-              console.log('connected control screen')
-            })
-    
-            client.subscribe(topic_mqtt, function (err) {
-              if (!err) {
-                 console.log('connected',topic_mqtt)
-               }
-            })
-    
-            client.on('message', function (topic, message) {
-              console.log(topic)
-                let data= JSON.parse(message.toString())
-                  console.log(data)
-                }
-            )
-          }
-          catch(error){  
-            alert(error)  
-          } 
-      
-        } 
-        displayData()
-      }, [])
-}
+var client
+let arrayOfData=[]
+export default function ({ navigation }) {
 
-export default function mqttTerminalScreen() {
-    return (
-      // <ControlStack.Navigator>
-        <Layout name="Terminal" component={mqttTerminal} 
-        options={{
-          title: 'Smart Fertigation Dashboard',
-          headerStyle: {
-            backgroundColor: '#141414',
-            height: Platform.OS === 'android' ? 70 : 90,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontSize:Platform.OS === 'android' ? 14 : 16,
-            alignSelf:'center'
-          },
-          header: () => (
-            <SafeAreaView
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                paddingTop:Platform.OS === 'android' ? 40 : 50,
-                height: Platform.OS === 'android' ? 80 : 80,
-                backgroundColor: '#141414',
-                borderBottomColor:"#444444",
-                borderBottomWidth:1
-              }}>
-              <Image
-                style={{width:20,
-                height:20, marginRight:10}}
-                source={require('../assets/Nex-plexIcon2.png')}
-              />
-              <Text style={{color:"#ffffff", fontSize:Platform.OS === 'android' ? 16 : 17,fontWeight:'bold'}}>SMART FERTIGATION DASHBOARD</Text>
-              <h1> Hello World Map!</h1>
-              <WorldMap selected={ selected } onSelect={ onSelect } />
-            </SafeAreaView>
-          ),
-        }}/>
-      // </ControlStack.Navigator>
-    );
+// Set input for mqtt server and topic
+var mqttServer = 'wss://txio.uitm.edu.my:8888/mqtt'
+var mqttTopic = 'TRX/gps/random'
+
+// Set logic for button, input state for connected and disconnected
+const [buttonCondition, setButtonCondition] = useState(false)
+const [edit, setEdit] = useState(true)
+const [select, setSelect] = useState(true)
+const [connectButton, setConnectButton] = useState(false)
+const [disconnectButton, setDisconnectButton] = useState(true)
+
+// Display data
+// const [textData, setTextData] = useState([])
+const [station,setSID]  = useState(null);
+const [LAT,setLAT]  = useState(null);
+const [LON,setLON]  = useState(null);
+
+
+useEffect(() => {
+  try {
+    client = mqtt.connect(mqttServer)
+    client.on('connect', ()=>
+  {
+    client.subscribe(mqttTopic, function (err) {
+      if (err) {
+        console.log(err)
+        client.end()
+      }else{
+        console.log('connected',mqttTopic)        
+      }
+    })
+    client.on('message', function(topic,message) {
+      try {
+        let data= JSON.parse(message.toString())
+        console.log(data)
+        setSID(data.station)
+        setLAT(data.LAT)
+        setLON(data.LON)
+      }catch (error) {
+        console.log('error parse')
+      }
+    });
   }
+  )
+
+  } catch (error) {
+     console.log(error)
+  }
+}, [buttonCondition]) //re-run function if connect button is clicked
+
+useEffect(() => {
+
+}, [])
+
+	return (
+		<Layout navigation={navigation} name="Terminal">
+			<View
+				style={{
+					flex: 1,
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor:"#8290e0",
+				}}
+			>
+		<Text style={{ 
+			color: "#a1bee6", 
+			fontSize: 20,
+			margin:10, 
+			marginBottom:10
+			}} 
+			bold
+			>WebSocket Logger</Text>
+        <View style={{height:"55%", backgroundColor:"#1b1f36", width:"85%", marginTop:20, padding:15, borderRadius: 10}}>
+          <Text style={{ 
+			color: "#fcfcfc", 
+			fontSize: 20,
+			margin:10, 
+			marginBottom:10
+			}} >STATION: {station}, LAT: {LAT}, LON: {LON}</Text>
+        </View>
+			</View>
+		</Layout>
+	);
+}

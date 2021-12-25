@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet } from 'react-native';
+import { Platform, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
+import Text from '../components/utils/UbuntuFont';
+import Layout from '../components/global/Layout';
 
-export default function App() {
+export default function ({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -37,11 +39,13 @@ export default function App() {
   }
 
   return (
+    <Layout navigation={navigation} name="locationTracker">
     <View style={styles.container}>
       <Text style={styles.paragraph}>LON: {LON}</Text>
       <Text style={styles.paragraph}>LAT: {LAT}</Text>
       <Text style={styles.paragraph}>{text}</Text>
     </View>
+    </Layout>
   );
 }
 

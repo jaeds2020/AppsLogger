@@ -35,17 +35,20 @@ export default function mapView() {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    LAT = JSON.stringify(location.coords.latitude);
-    LON = JSON.stringify(location.coords.longitude);
+    LAT = JSON.parse(location.coords.latitude);
+    LON = JSON.parse(location.coords.longitude);
+    console.log(LAT, LON);
   }
 
   return (
     <View style={styles.container}>
       <MapView initialRegion={{
-      latitude: Number(LAT),
-      longitude: Number(LON),
-      latitudeDelta: 0.015,
-      longitudeDelta: 0.0121,
+    //   latitude: Number(LAT),
+    //   longitude: Number(LON),
+      latitude: 3.084868430637176,
+      longitude: 101.38259426398143,
+      latitudeDelta: 0.04,
+      longitudeDelta: 0.05,
     }}
     style={styles.map} />
     </View>
