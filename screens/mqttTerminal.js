@@ -3,6 +3,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Layout from '../components/global/Layout';
 import Text from '../components/utils/UbuntuFont';
+const ReactDOM = require('react-dom');
+const WorldMap = require('react-world-map');
+
 
 // Data communication protocol
 var mqtt = require('@taoqf/react-native-mqtt')
@@ -11,6 +14,11 @@ var client  = mqtt.connect(server_mqtt)
 var topic_mqtt = 'txio_speed'
 
 function mqttTerminal() {
+  const [selected, onSelect] = useState(null);
+  ReactDOM.render(
+    <YourMainComponent />,
+    document.getElementById('react-app')
+  )
     useEffect(()=>{
         displayData = async ()=>{  
           try{  
@@ -74,6 +82,8 @@ export default function mqttTerminalScreen() {
                 source={require('../assets/Nex-plexIcon2.png')}
               />
               <Text style={{color:"#ffffff", fontSize:Platform.OS === 'android' ? 16 : 17,fontWeight:'bold'}}>SMART FERTIGATION DASHBOARD</Text>
+              <h1> Hello World Map!</h1>
+              <WorldMap selected={ selected } onSelect={ onSelect } />
             </SafeAreaView>
           ),
         }}/>

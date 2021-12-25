@@ -6,8 +6,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // IMPORT SCREEN FOR TAB NAVIGATOR
 import Home from '../screens/Home';
-import About from '../screens/About';
 import Terminal from '../screens/Terminal';
+import MapView from '../screens/mapView';
+import About from '../screens/About';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,10 +28,13 @@ export default function App() {
          if (route.name=='Home') { 
           iconName='ios-home' 
          }else if(route.name=="Terminal"){
-           iconName="ios-apps"
+           iconName="ios-speedometer-outline"
          }
          else if(route.name=="About"){
           iconName="ios-information-circle"
+        }
+        else if(route.name=="Map"){
+          iconName="ios-map-outline"
         }
         return <Ionicons name={iconName} size={size} color={color} />
         }
@@ -39,6 +43,7 @@ export default function App() {
       >
         <Tab.Screen name="Home" component={Home}/>
         <Tab.Screen name="Terminal" component={Terminal} />
+        <Tab.Screen name="Map" component={MapView} />
         <Tab.Screen name="About" component={About} />
       </Tab.Navigator>
     </NavigationContainer>
