@@ -30,7 +30,7 @@ export default function App() {
            iconName="ios-apps"
          }
          else if(route.name=="About"){
-          iconName="ios-water"
+          iconName="ios-information-circle"
         }
         return <Ionicons name={iconName} size={size} color={color} />
         }

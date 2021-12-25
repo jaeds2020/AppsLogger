@@ -3,12 +3,11 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, View, TextInput, Button, ScrollView  } from 'react-native';
 import Layout from '../components/global/Layout';
 import Text from '../components/utils/UbuntuFont';
-import Colors from '../constants/colors';
 var mqtt = require('@taoqf/react-native-mqtt')
 
 var client
 let arrayOfData=[]
-export default function Terminal() {
+export default function ({ navigation }) {
 
 // Change state
 function connectServer(){
@@ -66,10 +65,11 @@ useEffect(() => {
         let data= JSON.parse(message.toString())
         if(arrayOfData.length<10){
           arrayOfData.push(JSON.stringify(data))
-        }else{
-          arrayOfData.splice(0, 1)
-          arrayOfData.push(JSON.stringify(data))
         }
+		// else{
+        //   arrayOfData.splice(0, 1)
+        //   arrayOfData.push(JSON.stringify(data))
+        // }
         setTextData(arrayOfData)
         // console.log(arrayOfData)
       }catch (error) {
@@ -89,7 +89,7 @@ useEffect(() => {
 }, [])
 
 	return (
-		<Layout title="Terminal">
+		<Layout navigation={navigation} name="Terminal">
 			<View
 				style={{
 					flex: 1,

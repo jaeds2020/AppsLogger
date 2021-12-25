@@ -43,8 +43,8 @@ function mqttTerminal() {
 
 export default function mqttTerminalScreen() {
     return (
-      <ControlStack.Navigator>
-        <ControlStack.Screen name="Control" component={mqttTerminal} 
+      // <ControlStack.Navigator>
+        <Layout name="Terminal" component={mqttTerminal} 
         options={{
           title: 'Smart Fertigation Dashboard',
           headerStyle: {
@@ -77,6 +77,6 @@ export default function mqttTerminalScreen() {
             </SafeAreaView>
           ),
         }}/>
-      </ControlStack.Navigator>
+      // </ControlStack.Navigator>
     );
   }

@@ -6,7 +6,7 @@ import Text from '../components/utils/UbuntuFont';
 import Colors from '../constants/colors';
 export default function ({ navigation }) {
 	return (
-		<Layout navigation={navigation} title="Home">
+		<Layout navigation={navigation} name="Home">
 			<View
 				style={{
 					flex: 1,
