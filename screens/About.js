@@ -1,5 +1,8 @@
 import React from 'react';
-import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import Layout from '../components/global/Layout';
+import Text from '../components/utils/UbuntuFont';
+import Colors from '../constants/colors';
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -14,6 +17,7 @@ const App = () => {
   }, []);
 
   return (
+	<Layout name="About">
     <SafeAreaView style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollView}
@@ -21,6 +25,7 @@ const App = () => {
         <Text>Pull down to see RefreshControl indicator</Text>
       </ScrollView>
     </SafeAreaView>
+	</Layout>
   );
 };
 
@@ -30,7 +35,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: '#27ba6e',
     alignItems: 'center',
     justifyContent: 'center',
   },
