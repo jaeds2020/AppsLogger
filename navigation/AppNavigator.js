@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // IMPORT SCREEN FOR TAB NAVIGATOR
 import Home from '../screens/Home';
-import Terminal from '../screens/mqttTerminal';
+import Terminal from '../screens/barCodeScanner';
 import locationTracker from '../screens/locationTracker';
 import MapView from '../screens/mapView';
 import About from '../screens/About';
